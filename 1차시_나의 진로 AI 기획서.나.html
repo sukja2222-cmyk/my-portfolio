@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 진로 AI 기획서</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+        :root {
+            --text-main: #2C3E50;
+            --text-light: #636E72;
+            --box-bg: #FFFFFF;
+            --bg-ivory: #FDFBF6; 
+            
+            --color-navy: #3C4F65;
+            
+            --color-1: #FF9FF3; /* 핑크 */
+            --color-2: #FECA57; /* 옐로우 */
+            --color-3: #1DD1A1; /* 민트 */
+            --color-4: #48DBFB; /* 스카이블루 */
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-ivory);
+            color: var(--text-main);
+            line-height: 1.4; 
+            padding: 15px 10px; 
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px; 
+            width: 100%;
+            background-color: var(--box-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            padding: 20px 30px; 
+            box-sizing: border-box;
+            position: relative;
+            border: 1px solid #EAE6DF;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--color-navy);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px; 
+        }
+
+        .badge {
+            background-color: var(--color-navy);
+            color: white;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            color: var(--text-main);
+            font-size: 1.8rem; 
+            font-weight: 800;
+            margin: 0 0 4px 0;
+            word-break: keep-all;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px; 
+            background-color: #F8F9FA;
+            padding: 10px 15px; 
+            border-radius: 8px;
+            border: 1px solid #E9ECEF;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 6px; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-row span {
+            font-weight: 700;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .name-label {
+            margin-left: 8px;
+        }
+
+        .info-row input {
+            border: 1px solid #CBD5E1;
+            background: #FFFFFF;
+            padding: 4px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-navy);
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .info-row input.short-input { width: 35px; }
+        .info-row input.name-input { width: 80px; text-align: left; padding-left: 6px; }
+
+        .info-row input:focus { 
+            border-color: var(--color-navy);
+        }
+
+        .question-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 12px 15px; 
+            margin-bottom: 12px; 
+            border: 1px solid #F1F3F5;
+            border-left: 4px solid transparent; 
+        }
+
+        .card-1 { border-left-color: var(--color-1); }
+        .card-2 { border-left-color: var(--color-2); }
+        .card-3 { border-left-color: var(--color-3); }
+        .card-4 { border-left-color: var(--color-4); }
+
+        .card-1 .q-number { background-color: var(--color-1); }
+        .card-2 .q-number { background-color: var(--color-2); }
+        .card-3 .q-number { background-color: var(--color-3); }
+        .card-4 .q-number { background-color: var(--color-4); }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .q-number {
+            color: white;
+            width: 22px; 
+            height: 22px;
+            border-radius: 4px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .q-title {
+            font-size: 1.05rem; 
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .q-desc {
+            font-size: 0.85rem; 
+            color: var(--text-light);
+            margin-top: 2px;
+            margin-left: 32px;
+            margin-bottom: 8px; 
+            font-weight: 500;
+        }
+
+        textarea, input[type="text"].robot-name {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #DCE1E6;
+            border-radius: 4px;
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            resize: none; 
+            background-color: #FCFDFD;
+            transition: border-color 0.3s;
+            overflow: hidden; 
+        }
+
+        textarea:focus, input[type="text"].robot-name:focus {
+            outline: none;
+            border-color: var(--color-navy);
+            background-color: #FFFFFF;
+        }
+
+        textarea {
+            min-height: 40px; 
+        }
+
+        .input-area {
+            margin-left: 32px;
+        }
+
+        .sub-input-group {
+            margin-left: 32px;
+            margin-bottom: 12px;
+        }
+
+        .sub-input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .sub-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-navy);
+            margin-bottom: 6px;
+        }
+
+        .sub-label::before {
+            content: '🔹 ';
+            font-size: 0.75rem;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px; 
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-save {
+            background: var(--color-navy);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(60, 79, 101, 0.15);
+            transition: transform 0.2s, background-color 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            background: #2C3E50;
+        }
+        
+        /* 다시 쓰기(리셋) 버튼 스타일 */
+        .btn-reset {
+            background: #F1F3F5;
+            color: var(--text-light);
+            border: 1px solid #DCE1E6;
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            background: #E2E8F0;
+            color: var(--text-main);
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .q-desc, .input-area, .sub-input-group { margin-left: 0; }
+            .q-number { margin-bottom: 6px; }
+            .question-header { flex-direction: column; align-items: flex-start; }
+            .student-info { padding: 10px; }
+            .btn-group { gap: 10px; }
+            .btn-save, .btn-reset { padding: 10px 20px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="capture-area">
+        <header>
+            <div class="badge">꿈을 향한 스위치 ON - 1차시</div>
+            <h1>나의 진로 AI 기획서</h1>
+            <p class="subtitle">Gemini와 함께 기획하는 나만의 미래 진로 AI</p>
+        </header>
+
+        <section class="student-info">
+            <div class="info-row">
+                <input type="text" id="grade" class="short-input"> <span>학년</span>
+                <input type="text" id="class" class="short-input"> <span>반</span>
+                <input type="text" id="number" class="short-input"> <span>번</span>
+                <span class="name-label">이름:</span> <input type="text" id="name" class="name-input">
+            </div>
+        </section>
+
+        <div class="question-card card-1">
+            <div class="question-header">
+                <div class="q-number">1</div>
+                <h2 class="q-title">탐색 진로 분야 🎯</h2>
+            </div>
+            <p class="q-desc">내가 관심 있는 직업이나 희망하는 진로 분야는 무엇인가요?</p>
+            <div class="input-area">
+                <textarea placeholder="예) 의료/보건 분야, 환경 보호 전문가 등" rows="1"></textarea>
+            </div>
+        </div>
+
+        <div class="question-card card-2">
+            <div class="question-header">
+                <div class="q-number">2</div>
+                <h2 class="q-title">현장 문제 정의 (Pain Point) 🤔</h2>
+            </div>
+            <p class="q-desc">선택한 진로 분야의 작업자가 겪는 문제를 적어주세요.</p>
+            <div class="input-area">
+                <textarea placeholder="예) 간호사들이 매일 무거운 의료 물품을 운반하느라 허리 통증을 겪음." rows="1"></textarea>
+            </div>
+        </div>
+
+        <div class="question-card card-3">
+            <div class="question-header">
+                <div class="q-number">3</div>
+                <h2 class="q-title">나의 진로 로봇 기획 🤖</h2>
+            </div>
+            <p class="q-desc">문제를 해결할 로봇을 구체적으로 기획해보세요.</p>
+            
+            <div class="sub-input-group">
+                <label class="sub-label">로봇 이름</label>
+                <input type="text" class="robot-name" placeholder="✨ 로봇의 멋진 이름을 지어주세요 (예: 헬스케어 메이트 '나이팅게일 봇')">
+            </div>
+            
+            <div class="sub-input-group">
+                <label class="sub-label">문제 해결 방법</label>
+                <textarea placeholder="로봇이 어떤 기능으로 현장의 문제를 해결할 수 있는지 적어주세요." rows="2"></textarea>
+            </div>
+
+            <div class="sub-input-group">
+                <label class="sub-label">서비스 시나리오</label>
+                <textarea placeholder="사용자가 로봇을 만났을 때부터 이용하는 과정을 순서대로 적어주세요." rows="2"></textarea>
+            </div>
+        </div>
+
+        <div class="question-card card-4">
+            <div class="question-header">
+                <div class="q-number">4</div>
+                <h2 class="q-title">아티보(Artibo) 적용 구상 🧩</h2>
+            </div>
+            <p class="q-desc">교육용 로봇 '아티보'의 기능으로 어떻게 실제 구현할 수 있을지 적어보세요.</p>
+            <div class="input-area">
+                <textarea placeholder="예) 카메라로 얼굴 인식, 스피커로 알림, LED 색깔로 상태 표시" rows="1"></textarea>
+            </div>
+        </div>
+
+        <div class="btn-container" id="btn-container">
+            <div class="btn-group">
+                <button class="btn-reset" id="reset-btn">다시 쓰기 🔄</button>
+                <button class="btn-save" id="save-btn">기획서 이미지로 저장하기 🖼️</button>
+            </div>
+            <p style="margin-top: 10px; color: var(--text-light); font-size: 0.8rem; font-weight: 500;">
+                * 작성 완료 후 버튼을 누르면 이미지로 자동 저장되어 패들렛에 바로 올릴 수 있습니다.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const textareas = document.querySelectorAll('textarea');
+        
+        // 텍스트 영역 높이 자동 조절
+        textareas.forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+        });
+
+        // 다시 쓰기(리셋) 기능
+        document.getElementById('reset-btn').addEventListener('click', function() {
+            if(confirm('작성한 내용을 모두 지우시겠습니까?')) {
+                // 모든 input과 textarea의 값을 비움
+                document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+                    el.value = '';
+                });
+                
+                // textarea의 높이를 기본값으로 초기화
+                textareas.forEach(ta => {
+                    ta.style.height = 'auto';
+                });
+            }
+        });
+
+        // 이미지 저장(캡처) 기능
+        document.getElementById('save-btn').addEventListener('click', function() {
+            const captureArea = document.getElementById('capture-area');
+            const btnContainer = document.getElementById('btn-container');
+            const originalButtonText = this.innerText;
+
+            this.innerText = '저장 중... ⏳';
+            btnContainer.style.visibility = 'hidden';
+
+            textareas.forEach(ta => {
+                ta.style.height = 'auto';
+                ta.style.height = (ta.scrollHeight + 2) + 'px'; 
+            });
+
+            html2canvas(captureArea, {
+                scale: 2, 
+                backgroundColor: '#FFFFFF',
+                useCORS: true,
+                windowWidth: captureArea.scrollWidth,
+                windowHeight: captureArea.scrollHeight
+            }).then(canvas => {
+                const link = document.createElement('a');
+                const studentName = document.getElementById('name').value.trim();
+                const fileName = studentName ? `진로AI기획서_${studentName}.png` : '진로AI기획서.png';
+                
+                link.download = fileName;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error('캡처 에러:', err);
+                this.innerText = '저장 실패 ❌';
+                setTimeout(() => { this.innerText = originalButtonText; }, 2000);
+            }).finally(() => {
+                btnContainer.style.visibility = 'visible';
+                if(this.innerText !== '저장 실패 ❌') {
+                    this.innerText = originalButtonText;
+                }
+                
+                textareas.forEach(ta => {
+                    ta.style.height = 'auto';
+                    ta.style.height = (ta.scrollHeight) + 'px'; 
+                });
+            });
+        });
+    </script>
+</body>
+</html>
